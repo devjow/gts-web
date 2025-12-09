@@ -89,8 +89,8 @@ export const Landing: React.FC = () => {
         </section>
 
         {/* The Problem Section */}
-        <section className='container space-y-6 py-16 md:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-slate-900/30'>
-          <div className='max-w-6xl mx-auto'>
+        <section className='space-y-6 py-16 md:py-24 border-t border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-slate-900/30'>
+          <div className='max-w-6xl mx-auto px-4'>
             <h2 className='text-3xl md:text-4xl font-bold text-center mb-4 text-slate-900 dark:text-white animate-slideUp'>
               Type systems are fragmented across the industry
             </h2>
@@ -295,8 +295,8 @@ export const Landing: React.FC = () => {
         </section>
 
         {/* How It Works Section */}
-        <section className='container space-y-6 py-16 md:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-slate-900/30'>
-          <div className='text-center mb-12'>
+        <section className='space-y-6 py-16 md:py-24 border-t border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-slate-900/30'>
+          <div className='text-center mb-12 px-4'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white'>
               A unified pipeline for all your types
             </h2>
@@ -304,7 +304,9 @@ export const Landing: React.FC = () => {
               From schema definition to production code in four simple steps
             </p>
           </div>
-          <PipelineFlow />
+          <div className='px-4'>
+            <PipelineFlow />
+          </div>
         </section>
 
         {/* Tools & Ecosystem Section */}
@@ -405,8 +407,8 @@ export const Landing: React.FC = () => {
         </section>
 
         {/* Community Section */}
-        <section className='container space-y-6 py-8 md:py-12 lg:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-slate-900/30'>
-          <div className='max-w-3xl mx-auto text-center'>
+        <section className='space-y-6 py-8 md:py-12 lg:py-24 border-t border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-slate-900/30'>
+          <div className='max-w-3xl mx-auto text-center px-4'>
             <h2 className='text-3xl font-bold mb-4 text-slate-900 dark:text-white'>
               Open. Transparent. Community-driven.
             </h2>

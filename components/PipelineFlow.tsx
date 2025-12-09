@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  FileCode,
-  CheckCircle,
-  Code2,
-  Rocket,
-  ChevronRight,
-} from 'lucide-react';
+import { FileCode, CheckCircle, Code2, Rocket } from 'lucide-react';
 
 interface PipelineStage {
   id: number;
@@ -18,7 +12,22 @@ interface PipelineStage {
 
 export const PipelineFlow: React.FC = () => {
   const [activeStage, setActiveStage] = useState<number | null>(null);
-  const [flowActive, setFlowActive] = useState(false);
+  const [clickedStage, setClickedStage] = useState<number | null>(null);
+
+  const handleStageClick = (stageId: number) => {
+    if (clickedStage === stageId) {
+      setClickedStage(null);
+    } else {
+      setClickedStage(stageId);
+    }
+  };
+
+  const isStageActive = (stageId: number) => {
+    return (
+      clickedStage === stageId ||
+      (clickedStage === null && activeStage === stageId)
+    );
+  };
 
   const stages: PipelineStage[] = [
     {
@@ -64,10 +73,19 @@ export const PipelineFlow: React.FC = () => {
       {/* Pipeline Visualization */}
       <div className='relative'>
         {/* Connection line */}
-        <div className='absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 -translate-y-1/2 hidden md:block'>
-          {flowActive && (
-            <div className='absolute inset-0 bg-gradient-to-r from-brand-500 via-blue-500 to-emerald-500 animate-pulse'></div>
-          )}
+        <div
+          className='absolute h-1 bg-slate-200 dark:bg-slate-800 hidden md:block'
+          style={{
+            top: '3.25rem',
+            left: '-50vw',
+            right: '-50vw',
+            width: '200vw',
+          }}
+        >
+          <div
+            className='absolute top-0 h-1 w-32 bg-gradient-to-r from-transparent via-brand-500 to-transparent animate-flow-line'
+            style={{ left: '-8rem' }}
+          ></div>
         </div>
 
         {/* Stages */}
@@ -77,13 +95,14 @@ export const PipelineFlow: React.FC = () => {
               {/* Stage card */}
               <div
                 className={`relative group cursor-pointer transition-all duration-300 ${
-                  activeStage === stage.id ? 'scale-105' : 'hover:scale-105'
+                  isStageActive(stage.id) ? 'scale-105' : 'hover:scale-105'
                 }`}
                 onMouseEnter={() => setActiveStage(stage.id)}
                 onMouseLeave={() => setActiveStage(null)}
+                onClick={() => handleStageClick(stage.id)}
               >
                 {/* Glow effect */}
-                {activeStage === stage.id && (
+                {isStageActive(stage.id) && (
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${stage.color} opacity-20 blur-xl rounded-2xl`}
                   ></div>
@@ -92,7 +111,7 @@ export const PipelineFlow: React.FC = () => {
                 {/* Card */}
                 <div
                   className={`relative bg-white dark:bg-slate-900 rounded-2xl border-2 p-6 transition-all duration-300 ${
-                    activeStage === stage.id
+                    isStageActive(stage.id)
                       ? 'border-transparent shadow-xl'
                       : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
@@ -119,10 +138,10 @@ export const PipelineFlow: React.FC = () => {
                     {stage.description}
                   </p>
 
-                  {/* Detail (shows on hover) */}
+                  {/* Detail (shows on hover or click) */}
                   <div
                     className={`text-xs text-slate-500 dark:text-slate-500 transition-all duration-300 overflow-hidden ${
-                      activeStage === stage.id
+                      isStageActive(stage.id)
                         ? 'max-h-20 opacity-100'
                         : 'max-h-0 opacity-0'
                     }`}
@@ -134,26 +153,16 @@ export const PipelineFlow: React.FC = () => {
                   <div className='mt-4 flex items-center gap-2'>
                     <div
                       className={`w-2 h-2 rounded-full ${
-                        activeStage === stage.id
+                        isStageActive(stage.id)
                           ? 'bg-emerald-500 animate-pulse'
                           : 'bg-slate-300 dark:bg-slate-700'
                       }`}
                     ></div>
                     <span className='text-xs text-slate-400'>
-                      {activeStage === stage.id ? 'Active' : 'Ready'}
+                      {isStageActive(stage.id) ? 'Active' : 'Ready'}
                     </span>
                   </div>
                 </div>
-
-                {/* Flow particles (only on active stage) */}
-                {activeStage === stage.id && index < stages.length - 1 && (
-                  <div className='hidden md:block absolute top-1/2 -right-8 -translate-y-1/2'>
-                    <ChevronRight
-                      className={`text-gradient-to-r ${stage.color} animate-pulse`}
-                      size={32}
-                    />
-                  </div>
-                )}
               </div>
             </div>
           ))}
@@ -161,7 +170,7 @@ export const PipelineFlow: React.FC = () => {
       </div>
 
       {/* Example output preview */}
-      {activeStage && (
+      {(clickedStage || activeStage) && (
         <div className='mt-12 p-6 bg-slate-900 rounded-xl border border-slate-800 animate-fadeIn'>
           <div className='flex items-center gap-2 mb-4'>
             <div className='flex gap-1.5'>
@@ -170,11 +179,12 @@ export const PipelineFlow: React.FC = () => {
               <div className='w-3 h-3 rounded-full bg-green-500'></div>
             </div>
             <span className='text-xs text-slate-400 font-mono ml-2'>
-              Stage {activeStage}: {stages[activeStage - 1].title}
+              Stage {clickedStage || activeStage}:{' '}
+              {stages[(clickedStage || activeStage)! - 1].title}
             </span>
           </div>
           <pre className='text-sm text-slate-300 font-mono overflow-x-auto'>
-            {activeStage === 1 && (
+            {(clickedStage || activeStage) === 1 && (
               <code>{`# Define GTS Schema
 gts.mycompany.users.api.user.v1~
 
@@ -189,7 +199,7 @@ gts.mycompany.users.api.user.v1~
   "required": ["id", "email"]
 }`}</code>
             )}
-            {activeStage === 2 && (
+            {(clickedStage || activeStage) === 2 && (
               <code>{`$ gts validate schema.json
 
 ✓ Schema ID valid: gts.mycompany.users.api.user.v1~
@@ -197,7 +207,7 @@ gts.mycompany.users.api.user.v1~
 ✓ No compatibility issues found
 ✓ Ready for code generation`}</code>
             )}
-            {activeStage === 3 && (
+            {(clickedStage || activeStage) === 3 && (
               <code>{`$ gts generate --lang=python,typescript,go
 
 Generated:
@@ -207,7 +217,7 @@ Generated:
 
 All bindings generated successfully!`}</code>
             )}
-            {activeStage === 4 && (
+            {(clickedStage || activeStage) === 4 && (
               <code>{`// TypeScript: Full IDE support & type safety
 import { User } from './mycompany_users_api_user_v1';
 

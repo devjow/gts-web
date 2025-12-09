@@ -71,6 +71,8 @@ export const AnimatedHero: React.FC = () => {
       <svg
         className='absolute inset-0 w-full h-full'
         xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 3200 800'
+        preserveAspectRatio='xMidYMid slice'
       >
         <defs>
           <linearGradient
@@ -86,14 +88,14 @@ export const AnimatedHero: React.FC = () => {
           </linearGradient>
         </defs>
         <path
-          d='M 0,300 Q 400,200 800,300 T 1600,300'
+          d='M 0,300 Q 400,200 800,300 T 1600,300 T 3200,300'
           fill='none'
           stroke='url(#line-gradient)'
           strokeWidth='2'
           className='animate-draw-line'
         />
         <path
-          d='M 0,400 Q 400,500 800,400 T 1600,400'
+          d='M 0,400 Q 400,500 800,400 T 1600,400 T 3200,400'
           fill='none'
           stroke='url(#line-gradient)'
           strokeWidth='2'
