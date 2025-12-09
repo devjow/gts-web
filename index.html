@@ -63,6 +63,17 @@
         background: #475569;
       }
     </style>
+    <script>
+      (function () {
+        const theme = localStorage.theme;
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          // Default to dark mode (either 'dark' in localStorage or no preference set)
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/index.css" />
   </head>
   <body

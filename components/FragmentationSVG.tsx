@@ -205,28 +205,17 @@ export const FragmentationSVG: React.FC<FragmentationSVGProps> = ({
             strokeWidth='3'
           />
 
-          {/* Hub label */}
-          <text
-            x='300'
-            y='200'
-            textAnchor='middle'
-            dominantBaseline='central'
-            fontSize='24'
-            fontWeight='bold'
-            fill='white'
-          >
-            GTS
-          </text>
-          <text
-            x='300'
-            y='220'
-            textAnchor='middle'
-            fontSize='10'
-            fill='white'
-            opacity='0.8'
-          >
-            Universal
-          </text>
+          {/* Hub logo */}
+          <foreignObject x='250' y='175' width='100' height='50'>
+            <div className='flex flex-col items-center justify-center w-full h-full'>
+              {/* GTS Logo - theme aware */}
+              <img
+                src='/gts_white.png'
+                alt='GTS'
+                className='block w-16 h-auto'
+              />
+            </div>
+          </foreignObject>
         </g>
       )}
 

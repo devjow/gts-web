@@ -9,10 +9,9 @@ export const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className='col-span-1'>
             <div className='flex items-center gap-2 mb-4'>
-              <div className='h-8 w-8 rounded-lg bg-gradient-to-br from-brand-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm'>
-                GTS
+              <div className='h-8 w-auto flex items-center justify-center'>
+                <img src='/gts_white.png' alt='GTS' className='h-8 w-auto' />
               </div>
-              <span className='font-bold'>GlobalTypeSystem</span>
             </div>
             <p className='text-sm text-slate-400'>
               A universal language for data types across all systems.
