@@ -233,7 +233,7 @@ body {
 
   @keyframes drawLine {
     from {
-      stroke-dashoffset: 1000;
+      stroke-dashoffset: 5000;
     }
     to {
       stroke-dashoffset: 0;
@@ -255,6 +255,15 @@ body {
     }
     50% {
       transform: translateY(-10px);
+    }
+  }
+
+  @keyframes flowLine {
+    0% {
+      left: -8rem;
+    }
+    100% {
+      left: 100%;
     }
   }
 
@@ -291,8 +300,8 @@ body {
   }
 
   .animate-draw-line {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
+    stroke-dasharray: 5000;
+    stroke-dashoffset: 5000;
     animation: drawLine 3s ease-in-out forwards;
   }
 
@@ -309,6 +318,10 @@ body {
 
   .animate-bounce-slow {
     animation: bounce-slow 3s ease-in-out infinite;
+  }
+
+  .animate-flow-line {
+    animation: flowLine 4s ease-in-out infinite;
   }
 
   /* Stagger animations */

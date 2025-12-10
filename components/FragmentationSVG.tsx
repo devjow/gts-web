@@ -22,17 +22,30 @@ export const FragmentationSVG: React.FC<FragmentationSVGProps> = ({
     { id: 'json', label: 'JSON Schema', color: '#000000', x: 300, y: 200 },
   ];
 
-  // Calculate unified positions (circular orbit around center)
-  const getUnifiedPosition = (index: number, total: number) => {
-    const centerX = 300;
-    const centerY = 200;
-    const radius = 120;
-    const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
+  // Fixed positions for connection line endpoints (these never change)
+  const getLineEndPosition = (index: number) => {
+    const positions = [
+      { x: 300, y: 80 }, // Python - Top
+      { x: 450, y: 130 }, // Go - Top-right
+      { x: 450, y: 270 }, // Rust - Bottom-right
+      { x: 150, y: 270 }, // TypeScript - Bottom-left
+      { x: 150, y: 130 }, // JSON Schema - Top-left
+    ];
 
-    return {
-      x: centerX + radius * Math.cos(angle),
-      y: centerY + radius * Math.sin(angle),
-    };
+    return positions[index];
+  };
+
+  // Calculate positions for visual blocks (you can adjust these independently)
+  const getBlockPosition = (index: number) => {
+    const positions = [
+      { x: 240, y: 30 }, // Python - Top (shifted left)
+      { x: 400, y: 100 }, // Go - Top-right (shifted left)
+      { x: 400, y: 240 }, // Rust - Bottom-right (shifted left)
+      { x: 80, y: 240 }, // TypeScript - Bottom-left (shifted left)
+      { x: 80, y: 100 }, // JSON Schema - Top-left (shifted left)
+    ];
+
+    return positions[index];
   };
 
   // Collision/conflict markers for fragmented state
@@ -192,35 +205,24 @@ export const FragmentationSVG: React.FC<FragmentationSVGProps> = ({
             strokeWidth='3'
           />
 
-          {/* Hub label */}
-          <text
-            x='300'
-            y='200'
-            textAnchor='middle'
-            dominantBaseline='central'
-            fontSize='24'
-            fontWeight='bold'
-            fill='white'
-          >
-            GTS
-          </text>
-          <text
-            x='300'
-            y='220'
-            textAnchor='middle'
-            fontSize='10'
-            fill='white'
-            opacity='0.8'
-          >
-            Universal
-          </text>
+          {/* Hub logo */}
+          <foreignObject x='250' y='175' width='100' height='50'>
+            <div className='flex flex-col items-center justify-center w-full h-full'>
+              {/* GTS Logo - theme aware */}
+              <img
+                src='/gts_white.png'
+                alt='GTS'
+                className='block w-16 h-auto'
+              />
+            </div>
+          </foreignObject>
         </g>
       )}
 
-      {/* Connection lines from GTS hub to blocks (only in unified state) */}
+      {/* Connection lines from GTS hub to all blocks (only in unified state) */}
       {animationState &&
         blocks.map((block, index) => {
-          const pos = getUnifiedPosition(index, blocks.length);
+          const pos = getLineEndPosition(index);
           return (
             <g key={`connection-${block.id}`}>
               <line
@@ -255,9 +257,7 @@ export const FragmentationSVG: React.FC<FragmentationSVGProps> = ({
 
       {/* Language blocks */}
       {blocks.map((block, index) => {
-        const pos = animationState
-          ? getUnifiedPosition(index, blocks.length)
-          : block;
+        const pos = animationState ? getBlockPosition(index) : block;
         const scale = animationState ? 0.8 : 1;
 
         return (

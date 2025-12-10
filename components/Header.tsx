@@ -12,21 +12,20 @@ export const Header: React.FC<HeaderProps> = ({
   onMenuClick,
   showMenuButton = true,
 }) => {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    // Initialize state based on current DOM class to match HTML script
+    return document.documentElement.classList.contains('dark');
+  });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // Initial Theme Check - Default to dark mode
+  // Sync state with DOM on mount (no DOM manipulation needed, just sync state)
   useEffect(() => {
-    if (localStorage.theme === 'light') {
-      document.documentElement.classList.remove('dark');
-      setIsDark(false);
-    } else {
-      // Default to dark mode (either 'dark' in localStorage or no preference set)
-      document.documentElement.classList.add('dark');
-      setIsDark(true);
-      if (!('theme' in localStorage)) {
-        localStorage.theme = 'dark';
-      }
+    const currentTheme = document.documentElement.classList.contains('dark');
+    setIsDark(currentTheme);
+    
+    // Set localStorage if not set
+    if (!localStorage.theme) {
+      localStorage.theme = currentTheme ? 'dark' : 'light';
     }
   }, []);
 
@@ -67,12 +66,18 @@ export const Header: React.FC<HeaderProps> = ({
         )}
 
         <Link to='/' className='mr-6 flex items-center space-x-2'>
-          <div className='h-8 w-8 rounded-lg bg-gradient-to-br from-brand-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm'>
-            GTS
+          <div className='h-8 w-auto flex items-center justify-center'>
+            <img
+              src='/gts_blue.png'
+              alt='GTS'
+              className='block dark:hidden h-8 w-auto'
+            />
+            <img
+              src='/gts_white.png'
+              alt='GTS'
+              className='hidden dark:block h-8 w-auto'
+            />
           </div>
-          <span className='hidden font-bold sm:inline-block text-slate-900 dark:text-white'>
-            Global Type System
-          </span>
         </Link>
 
         <div className='flex-1 flex items-center justify-end md:justify-between space-x-4'>

@@ -8,6 +8,7 @@ export const Layout: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const isDocs = location.pathname.startsWith('/docs');
+  const isLanding = location.pathname === '/' || location.pathname === '';
 
   return (
     <div className='min-h-screen bg-white dark:bg-slate-950 flex flex-col'>
@@ -16,7 +17,7 @@ export const Layout: React.FC = () => {
         showMenuButton={isDocs}
       />
 
-      <div className='flex flex-1 container max-w-screen-2xl mx-auto items-start'>
+      <div className={`flex flex-1 items-start ${isLanding ? '' : 'container max-w-screen-2xl mx-auto'}`}>
         {isDocs && (
           <Sidebar
             isOpen={isSidebarOpen}
@@ -25,7 +26,7 @@ export const Layout: React.FC = () => {
         )}
 
         <main
-          className={`flex-1 w-full py-8 px-4 md:px-8 ${isDocs ? 'lg:pl-8' : ''}`}
+          className={`flex-1 w-full ${isLanding ? '' : 'py-8 px-4 md:px-8'} ${isDocs ? 'lg:pl-8 container max-w-screen-2xl mx-auto' : ''}`}
         >
           <Outlet />
         </main>
