@@ -29,7 +29,10 @@ export const Landing: React.FC = () => {
     <div className='flex flex-col min-h-screen bg-white dark:bg-slate-950 overflow-hidden'>
       <main className='flex-1'>
         {/* Hero Section */}
-        <section className='relative space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 min-h-[90vh] flex items-center'>
+        <section
+          id='about'
+          className='relative space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 min-h-[90vh] flex items-center'
+        >
           <AnimatedHero />
           <div
             className={`container relative z-10 flex max-w-[64rem] flex-col items-center gap-6 text-center mx-auto px-4 transition-all duration-1000 ${
@@ -76,7 +79,7 @@ export const Landing: React.FC = () => {
         </section>
 
         {/* Interactive Validator Section */}
-        <section className='container mx-auto px-4 py-16 md:py-24'>
+        <section id='try-gts' className='container mx-auto px-4 py-16 md:py-24'>
           <div className='max-w-4xl mx-auto text-center mb-12'>
             <h2 className='text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white'>
               Try GTS now
@@ -195,7 +198,10 @@ export const Landing: React.FC = () => {
         </section>
 
         {/* Feature Grid */}
-        <section className='container space-y-6 py-8 md:py-12 lg:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900'>
+        <section
+          id='why-gts'
+          className='container space-y-6 py-8 md:py-12 lg:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900'
+        >
           <h2 className='text-3xl font-bold text-center mb-12 text-slate-900 dark:text-white animate-slideUp'>
             Why teams choose GTS
           </h2>
@@ -311,7 +317,10 @@ export const Landing: React.FC = () => {
         </section>
 
         {/* Tools & Ecosystem Section */}
-        <section className='container space-y-6 py-8 md:py-12 lg:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900'>
+        <section
+          id='ecosystem'
+          className='container space-y-6 py-8 md:py-12 lg:py-24 mx-auto px-4 border-t border-slate-100 dark:border-slate-900'
+        >
           <h2 className='text-3xl font-bold text-center mb-12 text-slate-900 dark:text-white'>
             The GTS ecosystem
           </h2>
